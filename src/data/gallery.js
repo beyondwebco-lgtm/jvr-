@@ -48,4 +48,25 @@ export const GALLERY_ITEMS = [
     image: '/images/gallery/site-work-7.jpg',
     caption: 'Elevated hard-rock site cutting and stepped civil foundation preparation.',
   },
+  {
+    id: 'site-work-8',
+    title: 'Diamond Wire Saw Boulder Cutting Setup',
+    category: 'Controlled Rock Cutting',
+    image: '/images/gallery/site-work-8.jpg',
+    caption: 'Controlled diamond wire cutting rig aligned across a massive granite boulder.',
+  },
+  {
+    id: 'site-work-9',
+    title: 'Precision Wire-Saw Rock Kerf & Alignment',
+    category: 'Controlled Rock Cutting',
+    image: '/images/gallery/site-work-9.jpg',
+    caption: 'Clean precision wire-saw cut channel through hard granite rock strata.',
+  },
+  {
+    id: 'site-work-10',
+    title: 'Wire-Saw Power Unit & Split Granite Block',
+    category: 'Controlled Rock Cutting',
+    image: '/images/gallery/site-work-10.jpg',
+    caption: 'Diamond wire-saw drive unit with cleanly sectioned granite block on site.',
+  },
 ];
