@@ -15,6 +15,7 @@ import {
   Check,
 } from 'lucide-react';
 import SectionHeading from './SectionHeading';
+import RevealOnScroll from './RevealOnScroll';
 import { COMPANY_INFO } from '@/data/company';
 import { SERVICES } from '@/data/services';
 
@@ -156,7 +157,7 @@ export default function ContactSection({ preselectedService = '' }) {
           />
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
+        <RevealOnScroll className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
           {/* Left Column: Official Address & Direct Contact Channels */}
           <div className="lg:col-span-5 bg-[#11171e] text-white rounded-sm p-5 sm:p-7 lg:p-9 border border-slate-800 space-y-6 sm:space-y-7">
             <div className="space-y-2 border-b border-slate-800 pb-5">
@@ -482,7 +483,7 @@ export default function ContactSection({ preselectedService = '' }) {
               </div>
             </form>
           </div>
-        </div>
+        </RevealOnScroll>
       </div>
     </section>
   );

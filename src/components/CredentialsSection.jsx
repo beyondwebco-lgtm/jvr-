@@ -15,6 +15,7 @@ import {
   X,
 } from 'lucide-react';
 import SectionHeading from './SectionHeading';
+import RevealOnScroll from './RevealOnScroll';
 import { COMPANY_INFO } from '@/data/company';
 
 const CREDENTIAL_CARDS = [
@@ -105,14 +106,14 @@ export default function CredentialsSection() {
         </div>
 
         {/* Credentials Card Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+        <RevealOnScroll className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
           {CREDENTIAL_CARDS.map((card, index) => {
             const Icon = card.icon;
             const isLastWide = index === CREDENTIAL_CARDS.length - 1;
             return (
               <div
                 key={card.label}
-                className={`bg-[#171e26] border border-slate-800 hover:border-amber-500/60 rounded-sm p-6 transition-all duration-200 flex flex-col justify-between ${
+                className={`bg-[#171e26] border border-slate-800 hover:border-amber-500/60 hover:-translate-y-0.5 rounded-sm p-6 transition-all duration-300 flex flex-col justify-between ${
                   isLastWide ? 'sm:col-span-2 lg:col-span-2' : ''
                 }`}
               >
@@ -135,7 +136,7 @@ export default function CredentialsSection() {
               </div>
             );
           })}
-        </div>
+        </RevealOnScroll>
 
         {/* Verification Disclaimer */}
         <div className="mt-8 p-4 sm:p-5 rounded-sm bg-[#121820] border border-slate-800 flex items-start gap-3.5 text-sm text-slate-300">
@@ -155,7 +156,7 @@ export default function CredentialsSection() {
           aria-modal="true"
           aria-labelledby="cert-modal-title"
         >
-          <div className="bg-[#171e26] border border-slate-700 rounded-sm max-w-lg w-full max-h-[90vh] overflow-y-auto p-5 sm:p-7 text-slate-200 shadow-2xl space-y-5">
+          <div className="bg-[#171e26] border border-slate-700 rounded-sm max-w-lg w-full max-h-[90vh] overflow-y-auto p-5 sm:p-7 text-slate-200 shadow-2xl space-y-5 animate-modal-in">
             <div className="flex items-start justify-between gap-4 border-b border-slate-800 pb-4">
               <div>
                 <p className="text-xs font-bold uppercase tracking-widest text-amber-400">

@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { ArrowRight, CheckCircle2, X, Wrench } from 'lucide-react';
 import SectionHeading from './SectionHeading';
 import DynamicIcon from './DynamicIcon';
+import RevealOnScroll from './RevealOnScroll';
 import { SERVICES } from '@/data/services';
 
 export default function ServicesSection({ showFullPageLink = true }) {
@@ -33,20 +34,20 @@ export default function ServicesSection({ showFullPageLink = true }) {
 
         {/* 6 Service Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-7">
-          {SERVICES.map((service) => (
-            <article
-              key={service.id}
-              id={service.id}
-              className="group bg-white border border-slate-200 hover:border-amber-500 rounded-sm overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col"
-            >
-              {/* Service Image */}
-              <div className="relative h-56 overflow-hidden bg-slate-900">
-                <img
-                  src={service.image}
-                  alt={service.imageAlt}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                  loading="lazy"
-                />
+          {SERVICES.map((service, idx) => (
+            <RevealOnScroll key={service.id} delay={(idx % 3) * 90}>
+              <article
+                id={service.id}
+                className="group h-full bg-white border border-slate-200 hover:border-amber-500 hover:-translate-y-1 rounded-sm overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 flex flex-col"
+              >
+                {/* Service Image */}
+                <div className="relative h-56 overflow-hidden bg-slate-900">
+                  <img
+                    src={service.image}
+                    alt={service.imageAlt}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                    loading="lazy"
+                  />
                 <div
                   className="absolute inset-0 bg-gradient-to-t from-slate-950/75 via-slate-950/15 to-transparent"
                   aria-hidden="true"
@@ -90,7 +91,8 @@ export default function ServicesSection({ showFullPageLink = true }) {
                   </Link>
                 </div>
               </div>
-            </article>
+              </article>
+            </RevealOnScroll>
           ))}
         </div>
       </div>
@@ -103,7 +105,7 @@ export default function ServicesSection({ showFullPageLink = true }) {
           aria-modal="true"
           aria-labelledby="service-modal-title"
         >
-          <div className="bg-white border border-slate-200 rounded-sm max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl">
+          <div className="bg-white border border-slate-200 rounded-sm max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl animate-modal-in">
             <div className="relative h-56 sm:h-64 bg-slate-900">
               <img
                 src={selectedService.image}

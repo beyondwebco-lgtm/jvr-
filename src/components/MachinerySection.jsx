@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { CheckCircle2, ArrowRight, Wrench } from 'lucide-react';
 import SectionHeading from './SectionHeading';
+import RevealOnScroll from './RevealOnScroll';
 import { MACHINERY } from '@/data/machinery';
 
 export default function MachinerySection({ showFullPageLink = true }) {
@@ -33,23 +34,23 @@ export default function MachinerySection({ showFullPageLink = true }) {
           {MACHINERY.map((item, idx) => {
             const isReversed = idx % 2 === 1;
             return (
-              <div
-                key={item.id}
-                id={item.id}
-                className="bg-[#171e26] border border-slate-800 hover:border-amber-500/50 rounded-sm overflow-hidden shadow-xl transition-colors duration-300 grid grid-cols-1 md:grid-cols-12"
-              >
-                {/* Machinery Photograph */}
+              <RevealOnScroll key={item.id} delay={idx * 80}>
                 <div
-                  className={`md:col-span-5 lg:col-span-6 relative aspect-[16/10] md:aspect-auto md:min-h-[340px] bg-slate-900 overflow-hidden ${
-                    isReversed ? 'md:order-2' : ''
-                  }`}
+                  id={item.id}
+                  className="group bg-[#171e26] border border-slate-800 hover:border-amber-500/50 rounded-sm overflow-hidden shadow-xl transition-all duration-500 grid grid-cols-1 md:grid-cols-12"
                 >
-                  <img
-                    src={item.image}
-                    alt={item.imageAlt}
-                    className="w-full h-full object-cover hover:scale-103 transition-transform duration-500"
-                    loading="lazy"
-                  />
+                  {/* Machinery Photograph */}
+                  <div
+                    className={`md:col-span-5 lg:col-span-6 relative aspect-[16/10] md:aspect-auto md:min-h-[340px] bg-slate-900 overflow-hidden ${
+                      isReversed ? 'md:order-2' : ''
+                    }`}
+                  >
+                    <img
+                      src={item.image}
+                      alt={item.imageAlt}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                      loading="lazy"
+                    />
                   <div
                     className="absolute inset-0 bg-gradient-to-t from-[#171e26]/80 via-transparent to-transparent md:hidden"
                     aria-hidden="true"
@@ -107,7 +108,8 @@ export default function MachinerySection({ showFullPageLink = true }) {
                     </Link>
                   </div>
                 </div>
-              </div>
+                </div>
+              </RevealOnScroll>
             );
           })}
         </div>

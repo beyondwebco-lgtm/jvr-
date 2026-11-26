@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { ArrowRight, Building2, UserCheck, FileBadge, MapPin } from 'lucide-react';
 import SectionHeading from './SectionHeading';
+import RevealOnScroll from './RevealOnScroll';
 import { COMPANY_INFO } from '@/data/company';
 
 export default function AboutSection({ compact = false }) {
@@ -9,12 +10,12 @@ export default function AboutSection({ compact = false }) {
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
           {/* Left Column: Construction Site Visual */}
-          <div className="lg:col-span-6 relative">
-            <div className="relative rounded-sm overflow-hidden shadow-2xl border border-slate-200 bg-slate-900">
+          <RevealOnScroll className="lg:col-span-6 relative">
+            <div className="group relative rounded-sm overflow-hidden shadow-2xl border border-slate-200 bg-slate-900">
               <img
                 src="/images/about-site.webp"
                 alt="Civil earthwork and land development construction site"
-                className="w-full h-[260px] sm:h-[380px] lg:h-[440px] object-cover"
+                className="w-full h-[260px] sm:h-[380px] lg:h-[440px] object-cover group-hover:scale-105 transition-transform duration-700"
                 loading="lazy"
               />
               <div
@@ -43,10 +44,10 @@ export default function AboutSection({ compact = false }) {
                 </p>
               </div>
             </div>
-          </div>
+          </RevealOnScroll>
 
           {/* Right Column: Corporate Introduction */}
-          <div className="lg:col-span-6 space-y-6">
+          <RevealOnScroll delay={120} className="lg:col-span-6 space-y-6">
             <SectionHeading
               eyebrow="About Our Company"
               title="About JVR Mining and Services"
@@ -148,7 +149,7 @@ export default function AboutSection({ compact = false }) {
                 </Link>
               </div>
             )}
-          </div>
+          </RevealOnScroll>
         </div>
       </div>
     </section>

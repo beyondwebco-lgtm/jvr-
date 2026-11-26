@@ -1,5 +1,6 @@
 import SectionHeading from './SectionHeading';
 import DynamicIcon from './DynamicIcon';
+import RevealOnScroll from './RevealOnScroll';
 import { WHY_CHOOSE_ITEMS } from '@/data/company';
 
 export default function WhyChooseSection() {
@@ -17,11 +18,11 @@ export default function WhyChooseSection() {
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
-          {WHY_CHOOSE_ITEMS.map((item) => (
-            <div
-              key={item.id}
-              className="group p-7 rounded-sm bg-slate-50 hover:bg-[#11171e] border border-slate-200 hover:border-amber-500 transition-all duration-300 flex flex-col gap-4"
-            >
+          {WHY_CHOOSE_ITEMS.map((item, idx) => (
+            <RevealOnScroll key={item.id} delay={(idx % 3) * 80}>
+              <div
+                className="group h-full p-7 rounded-sm bg-slate-50 hover:bg-[#11171e] border border-slate-200 hover:border-amber-500 hover:-translate-y-1 transition-all duration-400 flex flex-col gap-4"
+              >
               <div className="w-12 h-12 rounded-sm bg-amber-500/15 group-hover:bg-amber-500 text-amber-600 group-hover:text-slate-950 flex items-center justify-center transition-colors duration-300">
                 <DynamicIcon name={item.icon} className="w-6 h-6" />
               </div>
@@ -33,7 +34,8 @@ export default function WhyChooseSection() {
               <p className="text-sm text-slate-600 group-hover:text-slate-300 leading-relaxed transition-colors duration-300">
                 {item.description}
               </p>
-            </div>
+              </div>
+            </RevealOnScroll>
           ))}
         </div>
       </div>

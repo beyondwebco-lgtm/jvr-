@@ -118,7 +118,7 @@ export default function Header() {
 
       {/* Mobile & Tablet Navigation Drawer */}
       {mobileOpen && (
-        <div className="lg:hidden bg-white border-t border-slate-200 px-4 py-5 space-y-2 shadow-2xl max-h-[calc(100vh-4.5rem)] overflow-y-auto">
+        <div className="lg:hidden bg-white border-t border-slate-200 px-4 py-5 space-y-2 shadow-2xl max-h-[calc(100vh-4.5rem)] overflow-y-auto animate-drawer-in">
           <nav className="grid grid-cols-1 sm:grid-cols-2 gap-1.5" aria-label="Mobile Navigation">
             {NAV_LINKS.map((link) => {
               const active = isActive(link.href);
