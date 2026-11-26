@@ -20,4 +20,32 @@ export const GALLERY_ITEMS = [
     image: '/images/gallery/site-work-3.jpg',
     caption: 'Excavator-assisted boulder clearing and ground leveling for plot development.',
   },
+  {
+    id: 'site-work-4',
+    title: 'Granite Rock Splitting & Trench Line Work',
+    category: 'Rock Cutting',
+    image: '/images/gallery/site-work-4.jpg',
+    caption: 'Controlled granite rock splitting and line-drilling site operations.',
+  },
+  {
+    id: 'site-work-5',
+    title: '210-Class Hydraulic Excavator Earthwork',
+    category: 'Earth Cutting & Benching',
+    image: '/images/gallery/site-work-5.jpg',
+    caption: '210-class hydraulic excavator cutting and benching red earth alongside rock strata.',
+  },
+  {
+    id: 'site-work-6',
+    title: 'Tractor Compressor & Excavator Site Support',
+    category: 'Air Compressor & Excavation',
+    image: '/images/gallery/site-work-6.jpg',
+    caption: 'Tractor-mounted air compressor unit paired with crawler excavator for boulder breaking.',
+  },
+  {
+    id: 'site-work-7',
+    title: 'Rocky Terrain Cutting & Foundation Readiness',
+    category: 'Land Development',
+    image: '/images/gallery/site-work-7.jpg',
+    caption: 'Elevated hard-rock site cutting and stepped civil foundation preparation.',
+  },
 ];

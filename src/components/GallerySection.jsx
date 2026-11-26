@@ -1,22 +1,13 @@
 'use client';
 
 import { useState, useEffect, useCallback, useRef } from 'react';
-import {
-  Expand,
-  X,
-  ChevronLeft,
-  ChevronRight,
-  Pause,
-  Play,
-} from 'lucide-react';
+import { Expand, X, ChevronLeft, ChevronRight } from 'lucide-react';
 import SectionHeading from './SectionHeading';
 import { GALLERY_ITEMS } from '@/data/gallery';
 
 export default function GallerySection() {
   const scrollRef = useRef(null);
   const [lightboxIndex, setLightboxIndex] = useState(null);
-  const [autoScroll, setAutoScroll] = useState(true);
-  const [isPaused, setIsPaused] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
 
   const closeLightbox = useCallback(() => setLightboxIndex(null), []);
@@ -66,7 +57,6 @@ export default function GallerySection() {
     [activeIndex, scrollToCard]
   );
 
-  // Sync active indicator on manual horizontal scroll
   const handleScroll = () => {
     const container = scrollRef.current;
     if (!container) return;
@@ -86,32 +76,6 @@ export default function GallerySection() {
     setActiveIndex(closestIdx);
   };
 
-  // Smooth auto-scroll interval (pauses on hover, focus, or lightbox open)
-  useEffect(() => {
-    if (!autoScroll || isPaused || lightboxIndex !== null || GALLERY_ITEMS.length <= 1) {
-      return;
-    }
-    const timer = setInterval(() => {
-      setActiveIndex((prev) => {
-        const next = (prev + 1) % GALLERY_ITEMS.length;
-        const container = scrollRef.current;
-        if (container) {
-          const cards = container.querySelectorAll('[data-gallery-card]');
-          const target = cards[next];
-          if (target) {
-            container.scrollTo({
-              left: target.offsetLeft - container.offsetLeft,
-              behavior: 'smooth',
-            });
-          }
-        }
-        return next;
-      });
-    }, 3500);
-
-    return () => clearInterval(timer);
-  }, [autoScroll, isPaused, lightboxIndex]);
-
   const activeItem = lightboxIndex !== null ? GALLERY_ITEMS[lightboxIndex] : null;
 
   return (
@@ -121,35 +85,16 @@ export default function GallerySection() {
           <SectionHeading
             eyebrow="Site Operations"
             title="Our Work Gallery"
-            subtitle="Scroll through real site excavation, rock cutting, and earthwork photographs."
+            subtitle="Scroll or tap the arrows to browse real site excavation, rock cutting, and earthwork photographs."
             theme="light"
           />
 
-          {/* Scroll Mode Controls */}
+          {/* Tap Scroll Controls */}
           <div className="flex items-center gap-2.5 shrink-0">
             <button
               type="button"
-              onClick={() => setAutoScroll((prev) => !prev)}
-              className="inline-flex items-center gap-2 px-3.5 py-2.5 rounded-sm bg-white border border-slate-300 hover:border-amber-500 text-xs font-bold text-slate-800 transition-colors cursor-pointer"
-              aria-label={autoScroll ? 'Pause auto scroll' : 'Start auto scroll'}
-            >
-              {autoScroll ? (
-                <>
-                  <Pause className="w-3.5 h-3.5 text-amber-600" aria-hidden="true" />
-                  Auto-Scroll On
-                </>
-              ) : (
-                <>
-                  <Play className="w-3.5 h-3.5 text-amber-600" aria-hidden="true" />
-                  Auto-Scroll Paused
-                </>
-              )}
-            </button>
-
-            <button
-              type="button"
               onClick={() => scrollByStep('prev')}
-              className="p-2.5 rounded-sm bg-white border border-slate-300 hover:bg-[#11171e] hover:text-amber-400 hover:border-[#11171e] text-slate-800 transition-colors cursor-pointer"
+              className="inline-flex items-center justify-center p-3 rounded-sm bg-white border border-slate-300 hover:bg-[#11171e] hover:text-amber-400 hover:border-[#11171e] text-slate-800 shadow-xs transition-colors cursor-pointer"
               aria-label="Scroll gallery left"
             >
               <ChevronLeft className="w-5 h-5" />
@@ -157,7 +102,7 @@ export default function GallerySection() {
             <button
               type="button"
               onClick={() => scrollByStep('next')}
-              className="p-2.5 rounded-sm bg-white border border-slate-300 hover:bg-[#11171e] hover:text-amber-400 hover:border-[#11171e] text-slate-800 transition-colors cursor-pointer"
+              className="inline-flex items-center justify-center p-3 rounded-sm bg-white border border-slate-300 hover:bg-[#11171e] hover:text-amber-400 hover:border-[#11171e] text-slate-800 shadow-xs transition-colors cursor-pointer"
               aria-label="Scroll gallery right"
             >
               <ChevronRight className="w-5 h-5" />
@@ -166,12 +111,7 @@ export default function GallerySection() {
         </div>
 
         {/* Horizontal Scroll Mode Track */}
-        <div
-          onMouseEnter={() => setIsPaused(true)}
-          onMouseLeave={() => setIsPaused(false)}
-          onFocusCapture={() => setIsPaused(true)}
-          onBlurCapture={() => setIsPaused(false)}
-        >
+        <div className="relative">
           <div
             ref={scrollRef}
             onScroll={handleScroll}
@@ -235,7 +175,7 @@ export default function GallerySection() {
               ))}
             </div>
             <span className="text-xs font-semibold text-slate-500">
-              {activeIndex + 1} / {GALLERY_ITEMS.length} &bull; Scroll or click to enlarge
+              {activeIndex + 1} / {GALLERY_ITEMS.length} &bull; Scroll, tap arrows, or tap photo
             </span>
           </div>
         </div>
