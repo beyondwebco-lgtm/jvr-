@@ -1,12 +1,14 @@
 'use client';
 
 import { useState, useEffect, useCallback, useRef } from 'react';
-import { Expand, X, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Expand, X, ChevronLeft, ChevronRight, ArrowLeft, ArrowRight } from 'lucide-react';
 import SectionHeading from './SectionHeading';
 import { GALLERY_ITEMS } from '@/data/gallery';
 
 export default function GallerySection() {
   const scrollRef = useRef(null);
+  const programmaticScrollRef = useRef(false);
+  const scrollTimerRef = useRef(null);
   const [lightboxIndex, setLightboxIndex] = useState(null);
   const [activeIndex, setActiveIndex] = useState(0);
 
@@ -33,14 +35,30 @@ export default function GallerySection() {
     return () => window.removeEventListener('keydown', handleKey);
   }, [lightboxIndex, closeLightbox, showPrev, showNext]);
 
+  useEffect(() => {
+    return () => {
+      if (scrollTimerRef.current) clearTimeout(scrollTimerRef.current);
+    };
+  }, []);
+
   const scrollToCard = useCallback((index) => {
     const container = scrollRef.current;
     if (!container) return;
     const cards = container.querySelectorAll('[data-gallery-card]');
     const target = cards[index];
     if (!target) return;
+
+    programmaticScrollRef.current = true;
+    if (scrollTimerRef.current) clearTimeout(scrollTimerRef.current);
+    scrollTimerRef.current = setTimeout(() => {
+      programmaticScrollRef.current = false;
+    }, 550);
+
+    const maxScrollLeft = container.scrollWidth - container.clientWidth;
+    const desiredLeft = Math.min(target.offsetLeft - container.offsetLeft, maxScrollLeft);
+
     container.scrollTo({
-      left: target.offsetLeft - container.offsetLeft,
+      left: Math.max(0, desiredLeft),
       behavior: 'smooth',
     });
     setActiveIndex(index);
@@ -58,16 +76,18 @@ export default function GallerySection() {
   );
 
   const handleScroll = () => {
+    if (programmaticScrollRef.current) return;
     const container = scrollRef.current;
     if (!container) return;
     const cards = Array.from(container.querySelectorAll('[data-gallery-card]'));
     if (!cards.length) return;
-    const scrollCenter = container.scrollLeft + container.clientWidth / 2;
+
+    const currentLeft = container.scrollLeft;
     let closestIdx = 0;
     let minDistance = Infinity;
     cards.forEach((card, idx) => {
-      const cardCenter = card.offsetLeft - container.offsetLeft + card.clientWidth / 2;
-      const dist = Math.abs(scrollCenter - cardCenter);
+      const cardLeft = card.offsetLeft - container.offsetLeft;
+      const dist = Math.abs(currentLeft - cardLeft);
       if (dist < minDistance) {
         minDistance = dist;
         closestIdx = idx;
@@ -85,33 +105,55 @@ export default function GallerySection() {
           <SectionHeading
             eyebrow="Site Operations"
             title="Our Work Gallery"
-            subtitle="Scroll or tap the arrows to browse real site excavation, rock cutting, and earthwork photographs."
+            subtitle="Use the arrow buttons or scroll horizontally to browse site excavation, rock cutting, and earthwork photographs."
             theme="light"
           />
 
-          {/* Tap Scroll Controls */}
-          <div className="flex items-center gap-2.5 shrink-0">
+          {/* Top Previous / Next Tap Buttons */}
+          <div className="flex items-center gap-3 shrink-0">
             <button
               type="button"
               onClick={() => scrollByStep('prev')}
-              className="inline-flex items-center justify-center p-3 rounded-sm bg-white border border-slate-300 hover:bg-[#11171e] hover:text-amber-400 hover:border-[#11171e] text-slate-800 shadow-xs transition-colors cursor-pointer"
-              aria-label="Scroll gallery left"
+              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-sm bg-white border border-slate-300 hover:bg-[#11171e] hover:text-amber-400 hover:border-[#11171e] text-slate-800 text-xs font-bold uppercase tracking-wider shadow-xs transition-colors cursor-pointer"
+              aria-label="Previous image"
             >
-              <ChevronLeft className="w-5 h-5" />
+              <ArrowLeft className="w-4 h-4" aria-hidden="true" />
+              Prev
             </button>
             <button
               type="button"
               onClick={() => scrollByStep('next')}
-              className="inline-flex items-center justify-center p-3 rounded-sm bg-white border border-slate-300 hover:bg-[#11171e] hover:text-amber-400 hover:border-[#11171e] text-slate-800 shadow-xs transition-colors cursor-pointer"
-              aria-label="Scroll gallery right"
+              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-sm bg-[#11171e] border border-[#11171e] hover:bg-amber-500 hover:text-slate-950 hover:border-amber-500 text-white text-xs font-bold uppercase tracking-wider shadow-xs transition-colors cursor-pointer"
+              aria-label="Next image"
             >
-              <ChevronRight className="w-5 h-5" />
+              Next
+              <ArrowRight className="w-4 h-4" aria-hidden="true" />
             </button>
           </div>
         </div>
 
-        {/* Horizontal Scroll Mode Track */}
-        <div className="relative">
+        {/* Horizontal Scroll Mode Track with Left/Right Overlay Arrow Buttons */}
+        <div className="relative group/track">
+          {/* Left Floating Arrow Button */}
+          <button
+            type="button"
+            onClick={() => scrollByStep('prev')}
+            className="absolute left-2 sm:left-4 top-[44%] -translate-y-1/2 z-20 w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-[#0e1318]/85 hover:bg-amber-500 text-white hover:text-slate-950 border border-white/25 shadow-xl backdrop-blur-xs flex items-center justify-center transition-all duration-200 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-500"
+            aria-label="Previous gallery image"
+          >
+            <ChevronLeft className="w-6 h-6" />
+          </button>
+
+          {/* Right Floating Arrow Button */}
+          <button
+            type="button"
+            onClick={() => scrollByStep('next')}
+            className="absolute right-2 sm:right-4 top-[44%] -translate-y-1/2 z-20 w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-[#0e1318]/85 hover:bg-amber-500 text-white hover:text-slate-950 border border-white/25 shadow-xl backdrop-blur-xs flex items-center justify-center transition-all duration-200 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-500"
+            aria-label="Next gallery image"
+          >
+            <ChevronRight className="w-6 h-6" />
+          </button>
+
           <div
             ref={scrollRef}
             onScroll={handleScroll}
@@ -160,7 +202,7 @@ export default function GallerySection() {
           </div>
 
           {/* Slide Dots & Counter */}
-          <div className="mt-4 flex items-center justify-between gap-4">
+          <div className="mt-4 flex flex-wrap items-center justify-between gap-4">
             <div className="flex items-center gap-2">
               {GALLERY_ITEMS.map((item, idx) => (
                 <button
@@ -175,7 +217,7 @@ export default function GallerySection() {
               ))}
             </div>
             <span className="text-xs font-semibold text-slate-500">
-              {activeIndex + 1} / {GALLERY_ITEMS.length} &bull; Scroll, tap arrows, or tap photo
+              {activeIndex + 1} / {GALLERY_ITEMS.length} &bull; Tap arrows or click photo to zoom
             </span>
           </div>
         </div>
