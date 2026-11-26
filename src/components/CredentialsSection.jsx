@@ -81,10 +81,10 @@ export default function CredentialsSection() {
   return (
     <section
       id="credentials"
-      className="py-20 lg:py-28 bg-industrial-grid text-white border-b border-slate-800"
+      className="py-16 sm:py-20 lg:py-28 bg-industrial-grid text-white border-b border-slate-800"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
-        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-12">
+        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-10 sm:mb-12">
           <SectionHeading
             eyebrow="Official Contractor Profile"
             title="Our Company Credentials"
@@ -96,7 +96,7 @@ export default function CredentialsSection() {
             type="button"
             onClick={handleViewCertificate}
             disabled={checkingPdf}
-            className="inline-flex items-center justify-center gap-2.5 bg-amber-500 hover:bg-amber-400 disabled:opacity-70 text-slate-950 font-extrabold text-sm px-6 py-4 rounded-sm transition-all duration-200 shadow-lg shadow-amber-500/15 shrink-0 cursor-pointer"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 bg-amber-500 hover:bg-amber-400 disabled:opacity-70 text-slate-950 font-extrabold text-sm px-6 py-4 rounded-sm transition-all duration-200 shadow-lg shadow-amber-500/15 shrink-0 cursor-pointer"
           >
             <FileText className="w-4 h-4" aria-hidden="true" />
             {checkingPdf ? 'Opening Certificate...' : 'View Registration Certificate'}
@@ -155,7 +155,7 @@ export default function CredentialsSection() {
           aria-modal="true"
           aria-labelledby="cert-modal-title"
         >
-          <div className="bg-[#171e26] border border-slate-700 rounded-sm max-w-lg w-full p-6 sm:p-7 text-slate-200 shadow-2xl space-y-5">
+          <div className="bg-[#171e26] border border-slate-700 rounded-sm max-w-lg w-full max-h-[90vh] overflow-y-auto p-5 sm:p-7 text-slate-200 shadow-2xl space-y-5">
             <div className="flex items-start justify-between gap-4 border-b border-slate-800 pb-4">
               <div>
                 <p className="text-xs font-bold uppercase tracking-widest text-amber-400">

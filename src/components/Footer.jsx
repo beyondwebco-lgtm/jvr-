@@ -17,8 +17,8 @@ export default function Footer() {
       {/* Subtle industrial top accent strip */}
       <div className="h-1.5 w-full industrial-accent-bar" aria-hidden="true" />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-12">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-12 sm:py-16">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-12">
           {/* Column 1: Brand & Tagline */}
           <div className="space-y-5">
             <JvrLogo theme="dark" size="lg" />

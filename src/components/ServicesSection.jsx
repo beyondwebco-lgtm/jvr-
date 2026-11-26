@@ -11,9 +11,9 @@ export default function ServicesSection({ showFullPageLink = true }) {
   const [selectedService, setSelectedService] = useState(null);
 
   return (
-    <section id="services" className="py-20 lg:py-28 bg-concrete-grid border-b border-slate-200">
+    <section id="services" className="py-16 sm:py-20 lg:py-28 bg-concrete-grid border-b border-slate-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-14">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10 sm:mb-14">
           <SectionHeading
             eyebrow="What We Deliver"
             title="Our Professional Services"
@@ -32,7 +32,7 @@ export default function ServicesSection({ showFullPageLink = true }) {
         </div>
 
         {/* 6 Service Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-7">
           {SERVICES.map((service) => (
             <article
               key={service.id}
@@ -103,7 +103,7 @@ export default function ServicesSection({ showFullPageLink = true }) {
           aria-modal="true"
           aria-labelledby="service-modal-title"
         >
-          <div className="bg-white border border-slate-200 rounded-sm max-w-2xl w-full overflow-hidden shadow-2xl">
+          <div className="bg-white border border-slate-200 rounded-sm max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl">
             <div className="relative h-56 sm:h-64 bg-slate-900">
               <img
                 src={selectedService.image}

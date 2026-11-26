@@ -3,12 +3,12 @@ import { ChevronRight } from 'lucide-react';
 
 export default function PageBanner({ eyebrow, title, description, breadcrumb }) {
   return (
-    <section className="relative bg-industrial-grid text-white border-b border-slate-800 py-16 sm:py-20 overflow-hidden">
+    <section className="relative bg-industrial-grid text-white border-b border-slate-800 py-12 sm:py-16 lg:py-20 overflow-hidden">
       <div
         className="absolute inset-0 bg-gradient-to-r from-[#090d12]/90 via-[#0e1318]/85 to-amber-500/5 pointer-events-none"
         aria-hidden="true"
       />
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 space-y-4">
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 space-y-3 sm:space-y-4">
         <nav className="flex items-center gap-2 text-xs font-semibold text-slate-400" aria-label="Breadcrumb">
           <Link href="/" className="hover:text-amber-400 transition-colors">
             Home
@@ -26,12 +26,12 @@ export default function PageBanner({ eyebrow, title, description, breadcrumb }) 
           </div>
         )}
 
-        <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-white">
+        <h1 className="text-2xl sm:text-4xl lg:text-5xl font-black tracking-tight text-white">
           {title}
         </h1>
 
         {description && (
-          <p className="text-base sm:text-lg text-slate-300 max-w-3xl leading-relaxed">
+          <p className="text-sm sm:text-lg text-slate-300 max-w-3xl leading-relaxed">
             {description}
           </p>
         )}

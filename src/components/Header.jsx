@@ -36,38 +36,38 @@ export default function Header() {
           : 'bg-white border-b border-slate-200'
       }`}
     >
-      {/* Corporate Top Strip */}
-      <div className="hidden lg:block bg-[#0e1318] border-b border-slate-800 text-xs text-slate-300">
-        <div className="max-w-7xl mx-auto px-6 py-2 flex items-center justify-between gap-4">
-          <div className="flex items-center gap-6">
-            <span className="inline-flex items-center gap-1.5 text-amber-400 font-semibold">
+      {/* Corporate Top Strip (Tablet & Desktop) */}
+      <div className="hidden md:block bg-[#0e1318] border-b border-slate-800 text-xs text-slate-300">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-2 flex items-center justify-between gap-4">
+          <div className="flex items-center gap-4 lg:gap-6 min-w-0">
+            <span className="inline-flex items-center gap-1.5 text-amber-400 font-semibold shrink-0">
               <ShieldCheck className="w-3.5 h-3.5" aria-hidden="true" />
               {COMPANY_INFO.registration.category}
             </span>
-            <span className="inline-flex items-center gap-1.5 text-slate-400">
-              <MapPin className="w-3.5 h-3.5 text-amber-500" aria-hidden="true" />
+            <span className="hidden lg:inline-flex items-center gap-1.5 text-slate-400 truncate">
+              <MapPin className="w-3.5 h-3.5 text-amber-500 shrink-0" aria-hidden="true" />
               Shaikpet, Film Nagar, {COMPANY_INFO.address.cityState}
             </span>
           </div>
-          <div className="flex items-center gap-5 text-slate-400">
+          <div className="flex items-center gap-4 lg:gap-5 text-slate-400 shrink-0">
             <span>
               Proprietor:{' '}
               <strong className="text-slate-200 font-semibold">{COMPANY_INFO.proprietor}</strong>
             </span>
-            <span className="text-slate-600">|</span>
-            <span className="text-slate-300">{COMPANY_INFO.branding}</span>
+            <span className="hidden xl:inline text-slate-600">|</span>
+            <span className="hidden xl:inline text-slate-300">{COMPANY_INFO.branding}</span>
           </div>
         </div>
       </div>
 
       {/* Main Navigation Bar */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 h-20 sm:h-22 flex items-center justify-between gap-4">
+      <div className="max-w-7xl mx-auto px-3 sm:px-6 h-18 sm:h-20 lg:h-22 flex items-center justify-between gap-3 sm:gap-4">
         <Link
           href="/"
           className="focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-500 rounded shrink-0"
           aria-label="JVR Mining and Services Home"
         >
-          <JvrLogo theme="light" size="md" />
+          <JvrLogo theme="light" size="md" className="!h-12 sm:!h-14 lg:!h-16" />
         </Link>
 
         {/* Desktop Nav */}
@@ -116,10 +116,10 @@ export default function Header() {
         </button>
       </div>
 
-      {/* Mobile Navigation Drawer */}
+      {/* Mobile & Tablet Navigation Drawer */}
       {mobileOpen && (
-        <div className="lg:hidden bg-white border-t border-slate-200 px-4 py-5 space-y-2 shadow-2xl">
-          <nav className="flex flex-col space-y-1" aria-label="Mobile Navigation">
+        <div className="lg:hidden bg-white border-t border-slate-200 px-4 py-5 space-y-2 shadow-2xl max-h-[calc(100vh-4.5rem)] overflow-y-auto">
+          <nav className="grid grid-cols-1 sm:grid-cols-2 gap-1.5" aria-label="Mobile Navigation">
             {NAV_LINKS.map((link) => {
               const active = isActive(link.href);
               return (

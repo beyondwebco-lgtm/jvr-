@@ -145,9 +145,9 @@ export default function ContactSection({ preselectedService = '' }) {
   };
 
   return (
-    <section id="contact" className="py-20 lg:py-28 bg-white">
+    <section id="contact" className="py-16 sm:py-20 lg:py-28 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
-        <div className="mb-14">
+        <div className="mb-10 sm:mb-14">
           <SectionHeading
             eyebrow="Get In Touch"
             title="Let's Start Your Project"
@@ -156,9 +156,9 @@ export default function ContactSection({ preselectedService = '' }) {
           />
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
           {/* Left Column: Official Address & Direct Contact Channels */}
-          <div className="lg:col-span-5 bg-[#11171e] text-white rounded-sm p-7 sm:p-9 border border-slate-800 space-y-7">
+          <div className="lg:col-span-5 bg-[#11171e] text-white rounded-sm p-5 sm:p-7 lg:p-9 border border-slate-800 space-y-6 sm:space-y-7">
             <div className="space-y-2 border-b border-slate-800 pb-5">
               <span className="text-xs font-bold uppercase tracking-[0.2em] text-amber-400">
                 Corporate Office
@@ -270,7 +270,7 @@ export default function ContactSection({ preselectedService = '' }) {
           </div>
 
           {/* Right Column: Project Enquiry Form */}
-          <div className="lg:col-span-7 bg-slate-50 border border-slate-200 rounded-sm p-7 sm:p-9 shadow-sm">
+          <div className="lg:col-span-7 bg-slate-50 border border-slate-200 rounded-sm p-5 sm:p-7 lg:p-9 shadow-sm">
             <h3 className="text-xl font-extrabold text-slate-900 mb-2">Project Enquiry Form</h3>
             <p className="text-sm text-slate-600 mb-6">
               Share your site location and required earthwork or machinery scope below.
@@ -452,7 +452,7 @@ export default function ContactSection({ preselectedService = '' }) {
                 </div>
               )}
 
-              <div className="flex flex-wrap items-center gap-3 pt-1">
+              <div className="flex flex-col sm:flex-row flex-wrap items-stretch sm:items-center gap-3 pt-1">
                 <button
                   type="submit"
                   disabled={status.type === 'submitting'}
@@ -461,22 +461,24 @@ export default function ContactSection({ preselectedService = '' }) {
                   <Send className="w-4 h-4" aria-hidden="true" />
                   {status.type === 'submitting' ? 'Sending...' : 'Send Enquiry'}
                 </button>
-                <button
-                  type="button"
-                  onClick={() => handleDirectAction('whatsapp')}
-                  className="inline-flex items-center justify-center gap-2 bg-[#11171e] hover:bg-emerald-600 text-white font-bold text-sm px-5 py-3.5 rounded-sm transition-colors cursor-pointer"
-                >
-                  <MessageSquare className="w-4 h-4" aria-hidden="true" />
-                  WhatsApp
-                </button>
-                <button
-                  type="button"
-                  onClick={() => handleDirectAction('call')}
-                  className="inline-flex items-center justify-center gap-2 border border-slate-300 hover:border-amber-500 text-slate-800 font-bold text-sm px-5 py-3.5 rounded-sm transition-colors cursor-pointer"
-                >
-                  <Phone className="w-4 h-4" aria-hidden="true" />
-                  Call Now
-                </button>
+                <div className="grid grid-cols-2 sm:flex gap-3">
+                  <button
+                    type="button"
+                    onClick={() => handleDirectAction('whatsapp')}
+                    className="inline-flex items-center justify-center gap-2 bg-[#11171e] hover:bg-emerald-600 text-white font-bold text-sm px-5 py-3.5 rounded-sm transition-colors cursor-pointer"
+                  >
+                    <MessageSquare className="w-4 h-4" aria-hidden="true" />
+                    WhatsApp
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => handleDirectAction('call')}
+                    className="inline-flex items-center justify-center gap-2 border border-slate-300 hover:border-amber-500 text-slate-800 font-bold text-sm px-5 py-3.5 rounded-sm transition-colors cursor-pointer"
+                  >
+                    <Phone className="w-4 h-4" aria-hidden="true" />
+                    Call Now
+                  </button>
+                </div>
               </div>
             </form>
           </div>

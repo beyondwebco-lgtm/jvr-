@@ -5,39 +5,39 @@ import { COMPANY_INFO } from '@/data/company';
 
 export default function AboutSection({ compact = false }) {
   return (
-    <section id="about" className="py-20 lg:py-28 bg-white border-b border-slate-200">
+    <section id="about" className="py-16 sm:py-20 lg:py-28 bg-white border-b border-slate-200 overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-14 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
           {/* Left Column: Construction Site Visual */}
           <div className="lg:col-span-6 relative">
             <div className="relative rounded-sm overflow-hidden shadow-2xl border border-slate-200 bg-slate-900">
               <img
                 src="/images/about-site.webp"
                 alt="Civil earthwork and land development construction site"
-                className="w-full h-[360px] sm:h-[440px] object-cover"
+                className="w-full h-[260px] sm:h-[380px] lg:h-[440px] object-cover"
                 loading="lazy"
               />
               <div
                 className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent"
                 aria-hidden="true"
               />
-              <div className="absolute bottom-0 left-0 right-0 p-5 sm:p-6 text-white">
-                <p className="text-xs font-bold uppercase tracking-widest text-amber-400 mb-1">
+              <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-6 text-white">
+                <p className="text-[11px] sm:text-xs font-bold uppercase tracking-widest text-amber-400 mb-1">
                   {COMPANY_INFO.branding}
                 </p>
-                <p className="text-sm sm:text-base font-semibold text-slate-100">
+                <p className="text-xs sm:text-base font-semibold text-slate-100">
                   Structured earth cutting, excavation, filling &amp; grading operations
                 </p>
               </div>
             </div>
 
-            {/* Offset Corner Industrial Badge */}
-            <div className="hidden sm:flex absolute -bottom-6 -right-4 bg-[#11171e] text-white p-5 rounded-sm shadow-xl border-l-4 border-amber-500 max-w-xs">
+            {/* Offset Corner Industrial Badge (Desktop) / Compact Strip (Tablet & Mobile) */}
+            <div className="mt-4 lg:mt-0 lg:absolute lg:-bottom-6 lg:right-4 bg-[#11171e] text-white p-4 sm:p-5 rounded-sm shadow-xl border-l-4 border-amber-500 lg:max-w-xs">
               <div className="space-y-1">
                 <span className="text-[11px] uppercase tracking-widest text-amber-400 font-bold block">
                   Proprietor
                 </span>
-                <p className="text-lg font-extrabold text-white">{COMPANY_INFO.proprietor}</p>
+                <p className="text-base sm:text-lg font-extrabold text-white">{COMPANY_INFO.proprietor}</p>
                 <p className="text-xs text-slate-400">
                   {COMPANY_INFO.registration.category} &bull; {COMPANY_INFO.address.cityState}
                 </p>

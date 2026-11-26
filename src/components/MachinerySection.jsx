@@ -7,10 +7,10 @@ export default function MachinerySection({ showFullPageLink = true }) {
   return (
     <section
       id="machinery"
-      className="py-20 lg:py-28 bg-industrial-grid text-white border-b border-slate-800"
+      className="py-16 sm:py-20 lg:py-28 bg-industrial-grid text-white border-b border-slate-800"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-14">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10 sm:mb-14">
           <SectionHeading
             eyebrow="Fleet & Heavy Equipment"
             title="Our Machinery & Equipment"
@@ -29,19 +29,19 @@ export default function MachinerySection({ showFullPageLink = true }) {
         </div>
 
         {/* Large Industrial Machinery Showcases */}
-        <div className="space-y-10">
+        <div className="space-y-8 sm:space-y-10">
           {MACHINERY.map((item, idx) => {
             const isReversed = idx % 2 === 1;
             return (
               <div
                 key={item.id}
                 id={item.id}
-                className="bg-[#171e26] border border-slate-800 hover:border-amber-500/50 rounded-sm overflow-hidden shadow-xl transition-colors duration-300 grid grid-cols-1 lg:grid-cols-12"
+                className="bg-[#171e26] border border-slate-800 hover:border-amber-500/50 rounded-sm overflow-hidden shadow-xl transition-colors duration-300 grid grid-cols-1 md:grid-cols-12"
               >
                 {/* Machinery Photograph */}
                 <div
-                  className={`lg:col-span-6 relative min-h-[280px] sm:min-h-[360px] bg-slate-900 overflow-hidden ${
-                    isReversed ? 'lg:order-2' : ''
+                  className={`md:col-span-5 lg:col-span-6 relative aspect-[16/10] md:aspect-auto md:min-h-[340px] bg-slate-900 overflow-hidden ${
+                    isReversed ? 'md:order-2' : ''
                   }`}
                 >
                   <img
@@ -51,7 +51,7 @@ export default function MachinerySection({ showFullPageLink = true }) {
                     loading="lazy"
                   />
                   <div
-                    className="absolute inset-0 bg-gradient-to-t from-[#171e26]/80 via-transparent to-transparent lg:hidden"
+                    className="absolute inset-0 bg-gradient-to-t from-[#171e26]/80 via-transparent to-transparent md:hidden"
                     aria-hidden="true"
                   />
                   <span className="absolute top-4 left-4 inline-flex items-center gap-1.5 bg-[#0e1318]/90 text-amber-400 text-xs font-bold uppercase tracking-widest px-3 py-1.5 rounded-sm border border-amber-500/40">
@@ -62,8 +62,8 @@ export default function MachinerySection({ showFullPageLink = true }) {
 
                 {/* Machinery Specifications & Capabilities */}
                 <div
-                  className={`lg:col-span-6 p-7 sm:p-10 flex flex-col justify-between space-y-6 ${
-                    isReversed ? 'lg:order-1' : ''
+                  className={`md:col-span-7 lg:col-span-6 p-6 sm:p-8 lg:p-10 flex flex-col justify-between space-y-6 ${
+                    isReversed ? 'md:order-1' : ''
                   }`}
                 >
                   <div className="space-y-4">

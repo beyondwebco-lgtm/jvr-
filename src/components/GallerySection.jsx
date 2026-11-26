@@ -99,9 +99,9 @@ export default function GallerySection() {
   const activeItem = lightboxIndex !== null ? GALLERY_ITEMS[lightboxIndex] : null;
 
   return (
-    <section id="gallery" className="py-20 lg:py-28 bg-concrete-grid border-b border-slate-200">
+    <section id="gallery" className="py-16 sm:py-20 lg:py-28 bg-concrete-grid border-b border-slate-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-5 sm:gap-6 mb-8 sm:mb-10">
           <SectionHeading
             eyebrow="Site Operations"
             title="Our Work Gallery"
@@ -110,11 +110,11 @@ export default function GallerySection() {
           />
 
           {/* Top Previous / Next Tap Buttons */}
-          <div className="flex items-center gap-3 shrink-0">
+          <div className="grid grid-cols-2 sm:flex items-center gap-3 w-full sm:w-auto shrink-0">
             <button
               type="button"
               onClick={() => scrollByStep('prev')}
-              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-sm bg-white border border-slate-300 hover:bg-[#11171e] hover:text-amber-400 hover:border-[#11171e] text-slate-800 text-xs font-bold uppercase tracking-wider shadow-xs transition-colors cursor-pointer"
+              className="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-sm bg-white border border-slate-300 hover:bg-[#11171e] hover:text-amber-400 hover:border-[#11171e] text-slate-800 text-xs font-bold uppercase tracking-wider shadow-xs transition-colors cursor-pointer"
               aria-label="Previous image"
             >
               <ArrowLeft className="w-4 h-4" aria-hidden="true" />
@@ -123,7 +123,7 @@ export default function GallerySection() {
             <button
               type="button"
               onClick={() => scrollByStep('next')}
-              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-sm bg-[#11171e] border border-[#11171e] hover:bg-amber-500 hover:text-slate-950 hover:border-amber-500 text-white text-xs font-bold uppercase tracking-wider shadow-xs transition-colors cursor-pointer"
+              className="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-sm bg-[#11171e] border border-[#11171e] hover:bg-amber-500 hover:text-slate-950 hover:border-amber-500 text-white text-xs font-bold uppercase tracking-wider shadow-xs transition-colors cursor-pointer"
               aria-label="Next image"
             >
               Next
@@ -138,26 +138,26 @@ export default function GallerySection() {
           <button
             type="button"
             onClick={() => scrollByStep('prev')}
-            className="absolute left-2 sm:left-4 top-[44%] -translate-y-1/2 z-20 w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-[#0e1318]/85 hover:bg-amber-500 text-white hover:text-slate-950 border border-white/25 shadow-xl backdrop-blur-xs flex items-center justify-center transition-all duration-200 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-500"
+            className="absolute left-2 sm:left-4 top-[42%] -translate-y-1/2 z-20 w-9 h-9 sm:w-12 sm:h-12 rounded-full bg-[#0e1318]/85 hover:bg-amber-500 text-white hover:text-slate-950 border border-white/25 shadow-xl backdrop-blur-xs flex items-center justify-center transition-all duration-200 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-500"
             aria-label="Previous gallery image"
           >
-            <ChevronLeft className="w-6 h-6" />
+            <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6" />
           </button>
 
           {/* Right Floating Arrow Button */}
           <button
             type="button"
             onClick={() => scrollByStep('next')}
-            className="absolute right-2 sm:right-4 top-[44%] -translate-y-1/2 z-20 w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-[#0e1318]/85 hover:bg-amber-500 text-white hover:text-slate-950 border border-white/25 shadow-xl backdrop-blur-xs flex items-center justify-center transition-all duration-200 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-500"
+            className="absolute right-2 sm:right-4 top-[42%] -translate-y-1/2 z-20 w-9 h-9 sm:w-12 sm:h-12 rounded-full bg-[#0e1318]/85 hover:bg-amber-500 text-white hover:text-slate-950 border border-white/25 shadow-xl backdrop-blur-xs flex items-center justify-center transition-all duration-200 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-500"
             aria-label="Next gallery image"
           >
-            <ChevronRight className="w-6 h-6" />
+            <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6" />
           </button>
 
           <div
             ref={scrollRef}
             onScroll={handleScroll}
-            className="flex gap-6 overflow-x-auto snap-x snap-mandatory scroll-smooth pb-5 [scrollbar-width:thin] [scrollbar-color:#f59e0b_#e2e8f0]"
+            className="flex gap-4 sm:gap-6 overflow-x-auto snap-x snap-mandatory scroll-smooth pb-5 [scrollbar-width:thin] [scrollbar-color:#f59e0b_#e2e8f0]"
           >
             {GALLERY_ITEMS.map((item, idx) => (
               <button
@@ -165,7 +165,7 @@ export default function GallerySection() {
                 type="button"
                 data-gallery-card
                 onClick={() => setLightboxIndex(idx)}
-                className="group relative shrink-0 w-[88%] sm:w-[70%] md:w-[56%] lg:w-[48%] snap-start text-left bg-slate-900 rounded-sm overflow-hidden border border-slate-200 hover:border-amber-500 shadow-md hover:shadow-xl transition-all duration-300 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-500"
+                className="group relative shrink-0 w-[86%] sm:w-[62%] md:w-[48%] lg:w-[46%] snap-start text-left bg-slate-900 rounded-sm overflow-hidden border border-slate-200 hover:border-amber-500 shadow-md hover:shadow-xl transition-all duration-300 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-500"
               >
                 <div className="aspect-[16/10] overflow-hidden bg-slate-950">
                   <img
@@ -245,18 +245,18 @@ export default function GallerySection() {
               <button
                 type="button"
                 onClick={showPrev}
-                className="absolute left-3 sm:left-6 top-1/2 -translate-y-1/2 p-3 rounded-sm bg-slate-900/80 hover:bg-amber-500 hover:text-slate-950 text-white transition-colors cursor-pointer"
+                className="absolute left-2 sm:left-6 top-1/2 -translate-y-1/2 z-10 p-2 sm:p-3 rounded-full sm:rounded-sm bg-slate-900/85 hover:bg-amber-500 hover:text-slate-950 text-white border border-white/20 transition-colors cursor-pointer"
                 aria-label="Previous image"
               >
-                <ChevronLeft className="w-6 h-6" />
+                <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6" />
               </button>
               <button
                 type="button"
                 onClick={showNext}
-                className="absolute right-3 sm:right-6 top-1/2 -translate-y-1/2 p-3 rounded-sm bg-slate-900/80 hover:bg-amber-500 hover:text-slate-950 text-white transition-colors cursor-pointer"
+                className="absolute right-2 sm:right-6 top-1/2 -translate-y-1/2 z-10 p-2 sm:p-3 rounded-full sm:rounded-sm bg-slate-900/85 hover:bg-amber-500 hover:text-slate-950 text-white border border-white/20 transition-colors cursor-pointer"
                 aria-label="Next image"
               >
-                <ChevronRight className="w-6 h-6" />
+                <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6" />
               </button>
             </>
           )}

@@ -4,9 +4,9 @@ import { WHY_CHOOSE_ITEMS } from '@/data/company';
 
 export default function WhyChooseSection() {
   return (
-    <section id="why-choose" className="py-20 lg:py-28 bg-white border-b border-slate-200">
+    <section id="why-choose" className="py-16 sm:py-20 lg:py-28 bg-white border-b border-slate-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
-        <div className="mb-14">
+        <div className="mb-10 sm:mb-14">
           <SectionHeading
             eyebrow="Our Strengths"
             title="Why Choose JVR?"
@@ -16,7 +16,7 @@ export default function WhyChooseSection() {
           />
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
           {WHY_CHOOSE_ITEMS.map((item) => (
             <div
               key={item.id}
