@@ -1,0 +1,25 @@
+{
+  "name": "jvr-mining-and-services",
+  "version": "1.0.0",
+  "private": true,
+  "description": "JVR Mining and Services - Earthwork, Excavation, and Infrastructure Solutions",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint src"
+  },
+  "dependencies": {
+    "lucide-react": "^0.475.0",
+    "next": "^15.2.4",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "^3.3.1",
+    "@tailwindcss/postcss": "^4.0.14",
+    "eslint": "^9.22.0",
+    "eslint-config-next": "^15.2.4",
+    "tailwindcss": "^4.0.14"
+  }
+}

@@ -1,0 +1,92 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --jvr-dark: #0e1318;
+    --jvr-dark-surface: #171e26;
+    --jvr-dark-elevated: #212a34;
+    --jvr-light: #ffffff;
+    --jvr-concrete: #f4f6f8;
+    --jvr-border-light: #e2e7ed;
+    --jvr-border-dark: #2c3744;
+    --jvr-amber: #f59e0b;
+    --jvr-amber-dark: #d97706;
+    --jvr-text-dark: #111827;
+    --jvr-text-muted: #4b5563;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    font-family: 'Segoe UI', 'Inter', -apple-system, BlinkMacSystemFont, Roboto, 'Helvetica Neue', Arial, sans-serif;
+    color: var(--jvr-text-dark);
+    background-color: var(--jvr-light);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body {
+    overflow-x: hidden;
+    line-height: 1.65;
+  }
+
+  h1, h2, h3, h4, .font-display {
+    font-family: 'Segoe UI', 'Bahnschrift', 'DIN Alternate', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+    letter-spacing: -0.015em;
+  }
+}
+
+/* Subtle industrial architectural blueprint grid for dark sections */
+.bg-industrial-grid {
+  background-color: #0e1318;
+  background-image:
+    linear-gradient(to right, rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+
+/* Subtle concrete / technical grid for light sections */
+.bg-concrete-grid {
+  background-color: #f4f6f8;
+  background-image:
+    linear-gradient(to right, rgba(15, 23, 42, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(15, 23, 42, 0.03) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+/* Industrial hazard accent stripe */
+.industrial-accent-bar {
+  background: repeating-linear-gradient(
+    -45deg,
+    #f59e0b,
+    #f59e0b 10px,
+    #171e26 10px,
+    #171e26 20px
+  );
+}
+
+/* Smooth fade-up animation helper */
+@keyframes fadeUpIn {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-up {
+  animation: fadeUpIn 0.65s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.animate-fade-up-delay-1 {
+  animation: fadeUpIn 0.65s cubic-bezier(0.22, 1, 0.36, 1) 0.12s both;
+}
+
+.animate-fade-up-delay-2 {
+  animation: fadeUpIn 0.65s cubic-bezier(0.22, 1, 0.36, 1) 0.24s both;
+}
+
+.animate-fade-up-delay-3 {
+  animation: fadeUpIn 0.65s cubic-bezier(0.22, 1, 0.36, 1) 0.36s both;
+}
