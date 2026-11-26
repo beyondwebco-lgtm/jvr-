@@ -1,30 +1,35 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
-import { Expand, X, ChevronLeft, ChevronRight, Info } from 'lucide-react';
+import { useState, useEffect, useCallback, useRef } from 'react';
+import {
+  Expand,
+  X,
+  ChevronLeft,
+  ChevronRight,
+  Pause,
+  Play,
+} from 'lucide-react';
 import SectionHeading from './SectionHeading';
-import { GALLERY_CATEGORIES, GALLERY_ITEMS } from '@/data/gallery';
+import { GALLERY_ITEMS } from '@/data/gallery';
 
 export default function GallerySection() {
-  const [activeCategory, setActiveCategory] = useState('All');
+  const scrollRef = useRef(null);
   const [lightboxIndex, setLightboxIndex] = useState(null);
-
-  const filteredItems =
-    activeCategory === 'All'
-      ? GALLERY_ITEMS
-      : GALLERY_ITEMS.filter((item) => item.category === activeCategory);
+  const [autoScroll, setAutoScroll] = useState(true);
+  const [isPaused, setIsPaused] = useState(false);
+  const [activeIndex, setActiveIndex] = useState(0);
 
   const closeLightbox = useCallback(() => setLightboxIndex(null), []);
 
   const showPrev = useCallback(() => {
     setLightboxIndex((prev) =>
-      prev === null ? null : (prev - 1 + filteredItems.length) % filteredItems.length
+      prev === null ? null : (prev - 1 + GALLERY_ITEMS.length) % GALLERY_ITEMS.length
     );
-  }, [filteredItems.length]);
+  }, []);
 
   const showNext = useCallback(() => {
-    setLightboxIndex((prev) => (prev === null ? null : (prev + 1) % filteredItems.length));
-  }, [filteredItems.length]);
+    setLightboxIndex((prev) => (prev === null ? null : (prev + 1) % GALLERY_ITEMS.length));
+  }, []);
 
   useEffect(() => {
     if (lightboxIndex === null) return;
@@ -37,92 +42,202 @@ export default function GallerySection() {
     return () => window.removeEventListener('keydown', handleKey);
   }, [lightboxIndex, closeLightbox, showPrev, showNext]);
 
-  const activeItem = lightboxIndex !== null ? filteredItems[lightboxIndex] : null;
+  const scrollToCard = useCallback((index) => {
+    const container = scrollRef.current;
+    if (!container) return;
+    const cards = container.querySelectorAll('[data-gallery-card]');
+    const target = cards[index];
+    if (!target) return;
+    container.scrollTo({
+      left: target.offsetLeft - container.offsetLeft,
+      behavior: 'smooth',
+    });
+    setActiveIndex(index);
+  }, []);
+
+  const scrollByStep = useCallback(
+    (direction) => {
+      const nextIdx =
+        direction === 'next'
+          ? (activeIndex + 1) % GALLERY_ITEMS.length
+          : (activeIndex - 1 + GALLERY_ITEMS.length) % GALLERY_ITEMS.length;
+      scrollToCard(nextIdx);
+    },
+    [activeIndex, scrollToCard]
+  );
+
+  // Sync active indicator on manual horizontal scroll
+  const handleScroll = () => {
+    const container = scrollRef.current;
+    if (!container) return;
+    const cards = Array.from(container.querySelectorAll('[data-gallery-card]'));
+    if (!cards.length) return;
+    const scrollCenter = container.scrollLeft + container.clientWidth / 2;
+    let closestIdx = 0;
+    let minDistance = Infinity;
+    cards.forEach((card, idx) => {
+      const cardCenter = card.offsetLeft - container.offsetLeft + card.clientWidth / 2;
+      const dist = Math.abs(scrollCenter - cardCenter);
+      if (dist < minDistance) {
+        minDistance = dist;
+        closestIdx = idx;
+      }
+    });
+    setActiveIndex(closestIdx);
+  };
+
+  // Smooth auto-scroll interval (pauses on hover, focus, or lightbox open)
+  useEffect(() => {
+    if (!autoScroll || isPaused || lightboxIndex !== null || GALLERY_ITEMS.length <= 1) {
+      return;
+    }
+    const timer = setInterval(() => {
+      setActiveIndex((prev) => {
+        const next = (prev + 1) % GALLERY_ITEMS.length;
+        const container = scrollRef.current;
+        if (container) {
+          const cards = container.querySelectorAll('[data-gallery-card]');
+          const target = cards[next];
+          if (target) {
+            container.scrollTo({
+              left: target.offsetLeft - container.offsetLeft,
+              behavior: 'smooth',
+            });
+          }
+        }
+        return next;
+      });
+    }, 3500);
+
+    return () => clearInterval(timer);
+  }, [autoScroll, isPaused, lightboxIndex]);
+
+  const activeItem = lightboxIndex !== null ? GALLERY_ITEMS[lightboxIndex] : null;
 
   return (
     <section id="gallery" className="py-20 lg:py-28 bg-concrete-grid border-b border-slate-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
-        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-10">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10">
           <SectionHeading
-            eyebrow="Operations Showcase"
+            eyebrow="Site Operations"
             title="Our Work Gallery"
-            subtitle="Visual overview of our core earthwork operations and heavy machinery capabilities."
+            subtitle="Scroll through real site excavation, rock cutting, and earthwork photographs."
             theme="light"
           />
-        </div>
 
-        {/* Honest Transparency Banner */}
-        <div className="mb-8 p-4 rounded-sm bg-white border border-slate-200 flex items-start gap-3 text-xs sm:text-sm text-slate-600">
-          <Info className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" aria-hidden="true" />
-          <p>
-            The photographs displayed below are representative visuals illustrating JVR Mining and
-            Services&apos; operational scope and equipment categories. Actual company project site
-            photographs will replace these placeholders as documented site imagery is added.
-          </p>
-        </div>
-
-        {/* Category Filter Tabs */}
-        <div className="flex flex-wrap gap-2 mb-10" role="tablist" aria-label="Gallery categories">
-          {GALLERY_CATEGORIES.map((category) => {
-            const active = activeCategory === category;
-            return (
-              <button
-                key={category}
-                type="button"
-                role="tab"
-                aria-selected={active}
-                onClick={() => {
-                  setActiveCategory(category);
-                  setLightboxIndex(null);
-                }}
-                className={`px-4 py-2 text-xs sm:text-sm font-bold rounded-sm border transition-all duration-200 cursor-pointer ${
-                  active
-                    ? 'bg-[#11171e] text-amber-400 border-[#11171e] shadow-sm'
-                    : 'bg-white text-slate-700 border-slate-200 hover:border-amber-500 hover:text-slate-950'
-                }`}
-              >
-                {category}
-              </button>
-            );
-          })}
-        </div>
-
-        {/* Responsive Image Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-          {filteredItems.map((item, idx) => (
+          {/* Scroll Mode Controls */}
+          <div className="flex items-center gap-2.5 shrink-0">
             <button
-              key={item.id}
               type="button"
-              onClick={() => setLightboxIndex(idx)}
-              className="group relative text-left bg-slate-900 rounded-sm overflow-hidden border border-slate-200 hover:border-amber-500 shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-500"
+              onClick={() => setAutoScroll((prev) => !prev)}
+              className="inline-flex items-center gap-2 px-3.5 py-2.5 rounded-sm bg-white border border-slate-300 hover:border-amber-500 text-xs font-bold text-slate-800 transition-colors cursor-pointer"
+              aria-label={autoScroll ? 'Pause auto scroll' : 'Start auto scroll'}
             >
-              <div className="aspect-[4/3] overflow-hidden">
-                <img
-                  src={item.image}
-                  alt={item.title}
-                  className="w-full h-full object-cover group-hover:scale-108 transition-transform duration-500"
-                  loading="lazy"
-                />
-              </div>
-
-              {/* Hover Overlay */}
-              <div
-                className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/30 to-transparent opacity-85 group-hover:opacity-95 transition-opacity"
-                aria-hidden="true"
-              />
-
-              <div className="absolute top-3 right-3 p-2 rounded-sm bg-black/55 text-white opacity-0 group-hover:opacity-100 transition-opacity">
-                <Expand className="w-4 h-4" aria-hidden="true" />
-              </div>
-
-              <div className="absolute bottom-0 left-0 right-0 p-4 text-white">
-                <span className="inline-block text-[10px] font-bold uppercase tracking-widest text-amber-400 mb-1">
-                  {item.category}
-                </span>
-                <h3 className="text-sm font-bold leading-snug text-white">{item.title}</h3>
-              </div>
+              {autoScroll ? (
+                <>
+                  <Pause className="w-3.5 h-3.5 text-amber-600" aria-hidden="true" />
+                  Auto-Scroll On
+                </>
+              ) : (
+                <>
+                  <Play className="w-3.5 h-3.5 text-amber-600" aria-hidden="true" />
+                  Auto-Scroll Paused
+                </>
+              )}
             </button>
-          ))}
+
+            <button
+              type="button"
+              onClick={() => scrollByStep('prev')}
+              className="p-2.5 rounded-sm bg-white border border-slate-300 hover:bg-[#11171e] hover:text-amber-400 hover:border-[#11171e] text-slate-800 transition-colors cursor-pointer"
+              aria-label="Scroll gallery left"
+            >
+              <ChevronLeft className="w-5 h-5" />
+            </button>
+            <button
+              type="button"
+              onClick={() => scrollByStep('next')}
+              className="p-2.5 rounded-sm bg-white border border-slate-300 hover:bg-[#11171e] hover:text-amber-400 hover:border-[#11171e] text-slate-800 transition-colors cursor-pointer"
+              aria-label="Scroll gallery right"
+            >
+              <ChevronRight className="w-5 h-5" />
+            </button>
+          </div>
+        </div>
+
+        {/* Horizontal Scroll Mode Track */}
+        <div
+          onMouseEnter={() => setIsPaused(true)}
+          onMouseLeave={() => setIsPaused(false)}
+          onFocusCapture={() => setIsPaused(true)}
+          onBlurCapture={() => setIsPaused(false)}
+        >
+          <div
+            ref={scrollRef}
+            onScroll={handleScroll}
+            className="flex gap-6 overflow-x-auto snap-x snap-mandatory scroll-smooth pb-5 [scrollbar-width:thin] [scrollbar-color:#f59e0b_#e2e8f0]"
+          >
+            {GALLERY_ITEMS.map((item, idx) => (
+              <button
+                key={item.id}
+                type="button"
+                data-gallery-card
+                onClick={() => setLightboxIndex(idx)}
+                className="group relative shrink-0 w-[88%] sm:w-[70%] md:w-[56%] lg:w-[48%] snap-start text-left bg-slate-900 rounded-sm overflow-hidden border border-slate-200 hover:border-amber-500 shadow-md hover:shadow-xl transition-all duration-300 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-500"
+              >
+                <div className="aspect-[16/10] overflow-hidden bg-slate-950">
+                  <img
+                    src={item.image}
+                    alt={item.title}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    loading="lazy"
+                  />
+                </div>
+
+                {/* Subtle bottom gradient for caption readability */}
+                <div
+                  className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/20 to-transparent"
+                  aria-hidden="true"
+                />
+
+                <div className="absolute top-4 right-4 p-2.5 rounded-sm bg-black/60 text-white opacity-90 group-hover:bg-amber-500 group-hover:text-slate-950 transition-colors">
+                  <Expand className="w-4 h-4" aria-hidden="true" />
+                </div>
+
+                <div className="absolute bottom-0 left-0 right-0 p-5 sm:p-6 text-white">
+                  <span className="inline-block text-[11px] font-bold uppercase tracking-widest text-amber-400 mb-1">
+                    {item.category}
+                  </span>
+                  <h3 className="text-base sm:text-lg font-extrabold leading-snug text-white">
+                    {item.title}
+                  </h3>
+                  <p className="text-xs sm:text-sm text-slate-300 mt-1 line-clamp-1">
+                    {item.caption}
+                  </p>
+                </div>
+              </button>
+            ))}
+          </div>
+
+          {/* Slide Dots & Counter */}
+          <div className="mt-4 flex items-center justify-between gap-4">
+            <div className="flex items-center gap-2">
+              {GALLERY_ITEMS.map((item, idx) => (
+                <button
+                  key={item.id}
+                  type="button"
+                  onClick={() => scrollToCard(idx)}
+                  aria-label={`Scroll to ${item.title}`}
+                  className={`h-2 rounded-full transition-all duration-300 cursor-pointer ${
+                    activeIndex === idx ? 'w-8 bg-amber-500' : 'w-2.5 bg-slate-300 hover:bg-slate-400'
+                  }`}
+                />
+              ))}
+            </div>
+            <span className="text-xs font-semibold text-slate-500">
+              {activeIndex + 1} / {GALLERY_ITEMS.length} &bull; Scroll or click to enlarge
+            </span>
+          </div>
         </div>
       </div>
 
@@ -143,7 +258,7 @@ export default function GallerySection() {
             <X className="w-6 h-6" />
           </button>
 
-          {filteredItems.length > 1 && (
+          {GALLERY_ITEMS.length > 1 && (
             <>
               <button
                 type="button"
@@ -164,24 +279,24 @@ export default function GallerySection() {
             </>
           )}
 
-          <div className="max-w-4xl w-full space-y-4">
+          <div className="max-w-5xl w-full space-y-4">
             <div className="relative rounded-sm overflow-hidden border border-slate-700 bg-black">
               <img
                 src={activeItem.image}
                 alt={activeItem.title}
-                className="w-full max-h-[75vh] object-contain mx-auto"
+                className="w-full max-h-[78vh] object-contain mx-auto"
               />
             </div>
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-white px-1">
               <div>
                 <span className="text-xs font-bold uppercase tracking-widest text-amber-400">
-                  {activeItem.category} &bull; Representative Visual
+                  {activeItem.category}
                 </span>
                 <h3 className="text-lg font-bold mt-0.5">{activeItem.title}</h3>
                 <p className="text-sm text-slate-300">{activeItem.caption}</p>
               </div>
               <span className="text-xs text-slate-400 shrink-0">
-                {lightboxIndex + 1} / {filteredItems.length}
+                {lightboxIndex + 1} / {GALLERY_ITEMS.length}
               </span>
             </div>
           </div>

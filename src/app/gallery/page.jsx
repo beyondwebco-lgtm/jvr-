@@ -4,16 +4,16 @@ import GallerySection from '@/components/GallerySection';
 export const metadata = {
   title: 'Work Gallery',
   description:
-    'Browse earth cutting, excavation, soil filling, land leveling, Tata Hitachi PC210, air compressor, and tipper transportation visuals.',
+    'Browse site excavation, rock cutting, and earthwork photographs from JVR Mining and Services.',
 };
 
 export default function GalleryPage() {
   return (
     <>
       <PageBanner
-        eyebrow="Visual Portfolio"
+        eyebrow="Site Operations"
         title="Our Work Gallery"
-        description="Filter across earthwork operations and heavy machinery categories, with full-resolution lightbox preview."
+        description="Scroll through real site excavation, rock breaking, and earthwork photographs with full-resolution lightbox preview."
         breadcrumb="Gallery"
       />
       <GallerySection />
